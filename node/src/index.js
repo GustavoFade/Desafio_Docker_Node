@@ -1,36 +1,23 @@
 const express = require('express')
 const app = express()
 const port = 3000
-const Sequelize = require('sequelize')
+const sequelize = require('./database')
 
-
-const dbName = process.env.DB_NAME;
-const dbUser = process.env.DB_USER;
-const dbHost = process.env.DB_HOST;
-const dbPassword = process.env.DB_PASSWORD;
-
-const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
-  dialect: "mysql",
-  host: dbHost,
-});
-
-app.use(express.json())
 app.get('/', (req, res) => {
-  return res.json({ name: "Ciclano Fulano" });
+  insertNameDatabase()
+  console.log("Received request: " + res.url)
+  res.writeHead(200, {"Content-type":"text/plain"})
+  return res.end("<h1>Full Cycle Rocks!</h1>")
 })
 
 sequelize.sync(() => console.log(`Banco de dados conectado: ${process.env.DB_NAME}`));
-
-(()=>{
-
-  const sql = `
-  INSERT INTO people (nome)
-  VALUES ("testesss");
-`
-sequelize.query(sql, {
-  type: sequelize.QueryTypes.INSERT
-})
-})()
+const insertNameDatabase = ()=>{
+  const nome = "João da Silva"
+  const sql = `INSERT INTO people (nome) VALUES ("${nome}");`
+  sequelize.query(sql, {
+    type: sequelize.QueryTypes.INSERT
+  })
+}
 
 app.listen(port, () => {
   console.log(`Rodando na porta ${port}`)

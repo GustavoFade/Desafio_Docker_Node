@@ -15,4 +15,4 @@ const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
   host: dbHost, //o host, neste caso estamos com um banco local
 });
 
-export default sequelize; //exportar
+module.exports = sequelize; //exportar

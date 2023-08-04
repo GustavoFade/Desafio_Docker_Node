@@ -5,13 +5,12 @@ const sequelize = require('./database')
 
 app.get('/', (req, res) => {
   insertNameDatabase()
-  console.log("Received request: " + res.url)
   res.writeHead(200, {"Content-type":"text/plain"})
   return res.end("<h1>Full Cycle Rocks!</h1>")
 })
 
 sequelize.sync(() => console.log(`Banco de dados conectado: ${process.env.DB_NAME}`));
-const insertNameDatabase = ()=>{
+function insertNameDatabase(){
   const nome = "João da Silva"
   const sql = `INSERT INTO people (nome) VALUES ("${nome}");`
   sequelize.query(sql, {

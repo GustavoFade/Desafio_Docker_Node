@@ -27,8 +27,6 @@ services:
       - desafio_node_network
     entrypoint: ["sh", "-c", "npx sequelize-cli db:migrate && node index.js"]
     tty: true
-    ports:
-      - 3000:3000
     environment:
       - DB_NAME=sequelizenode
       - DB_USER=root
@@ -57,14 +55,7 @@ services:
       timeout: 10s
       retries: 15
       start_period: 10s
-    ports:
-      - "3306:33060"
 
 networks:
   desafio_node_network:
     driver: bridge
-
-# volumes:
-#   bd_volume:
-#     name: database
-#     driver: local

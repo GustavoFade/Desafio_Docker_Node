@@ -50,11 +50,11 @@ services:
       - MYSQL_DATABASE=sequelizenode
     restart: always
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-      interval: 5s
+      test: ["CMD", "mysql" ,"-u", "root", "-p12345678", "sequelizenode"]
+      interval: 10s
       timeout: 10s
       retries: 15
-      start_period: 10s
+      start_period: 25s
 
 networks:
   desafio_node_network:

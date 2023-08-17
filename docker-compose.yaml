@@ -23,6 +23,8 @@ services:
     build: 
       context: node
       dockerfile: DockerFile.node
+    volumes:
+      - ./node/src:/app/src
     networks:
       - desafio_node_network
     entrypoint: ["sh", "-c", "npx sequelize-cli db:migrate && node index.js"]

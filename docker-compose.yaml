@@ -24,10 +24,10 @@ services:
       context: node
       dockerfile: DockerFile.node
     volumes:
-      - ./node/src:/app/src
+      - ./node/src:/home/node/app/src
     networks:
       - desafio_node_network
-    entrypoint: ["sh", "-c", "npx sequelize-cli db:migrate && node index.js"]
+    entrypoint: ["sh", "-c", "npm install && npx sequelize-cli db:migrate && node index.js"]
     tty: true
     environment:
       - DB_NAME=sequelizenode
@@ -43,8 +43,6 @@ services:
     build: 
       context: ./node/mysql
       dockerfile: Dockerfile.mysql
-    volumes:
-      - ./mysql:/var/lib/mysql
     networks:
       - desafio_node_network
     environment:
@@ -53,10 +51,12 @@ services:
     restart: always
     healthcheck:
       test: ["CMD", "mysql" ,"-u", "root", "-p12345678", "sequelizenode"]
-      interval: 10s
-      timeout: 10s
+      interval: 15s
+      timeout: 15s
       retries: 15
       start_period: 25s
+    volumes:
+      - ./mysql:/var/lib/mysql
 
 networks:
   desafio_node_network:

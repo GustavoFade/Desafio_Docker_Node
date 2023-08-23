@@ -1,13 +1,11 @@
 FROM node:19
 
-ENV DOCKERIZE_VERSION v0.7.0
-
 RUN usermod -u 1000 node
 USER node
 
+RUN mkdir -p /home/node/app/src
 
-WORKDIR /app/src
-COPY ./src /app/src
-RUN npm install
+WORKDIR /home/node/app/src
+COPY ./src /home/node/app/src
 
 EXPOSE 3000
